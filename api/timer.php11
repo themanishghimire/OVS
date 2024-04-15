@@ -1,0 +1,21 @@
+<?php
+include("connection.php");
+if (isset($_POST['Login'])){
+    $un = $_POST['admin_name'];
+    $pass=$_POST['admin_pass'];
+
+    $quer="SELECT * from admin WHERE admin_name='$un'AND admin_pass='$pass'";
+    $data=mysqli_query($connect, $quer);
+    $total=mysqli_num_rows($data);
+    
+    if ($total !=0){
+ session_start();
+ $_SESSION['auth']=true;
+ $_SESSION['start']=time();
+ //1 minute *60
+ $_SESSION['expire']=$_SESSION['start']+(1*60);
+    header("location: ../routes/admin.php");
+    }
+}
+   
+?>
